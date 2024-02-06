@@ -68,12 +68,17 @@ function showInfoPopup(markerType) {
     <p style="margin-left: 10px;">${info.description}</p>
     <p style="margin-left: 10px;"><b>${info.precio}</b></p>
     <img src="${info.imageUrl}" style="width: 100%; max-width: 300px; height: 200px;" />
+    <button style="margin-left: 10px;" onclick="showAlert()">Recetas</button>
     <button style="margin-left: 10px;" onclick="closeInfoPopup()">Cerrar</button>
   `;
 
   // Agregar la ventana emergente al cuerpo del documento
   document.body.appendChild(popup);
   document.body.classList.add("popup-open");
+}
+
+function showAlert(){
+  alert("Hola, estas son las recetas")
 }
 
 function closeInfoPopup() {
