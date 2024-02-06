@@ -1,14 +1,14 @@
 AFRAME.registerComponent("markerhandler", {
   init: function () {
-    // El evento 'markerFound' se dispara cuando se detecta el marcador
     this.el.addEventListener("markerFound", (event) => {
       // Muestra la ventana emergente con la información específica para cada tipo
-      showInfoPopup(event.target.getAttribute("value"));
+      showInfoPopup(parseInt(event.target.getAttribute("value")));
     });
 
     this.el.addEventListener("markerLost", () => {
       // Oculta la ventana emergente
       closeInfoPopup();
+      closeRecipesPopup();
     });
   },
 });
@@ -44,7 +44,6 @@ function showInfoPopup(markerType) {
       imageUrl: "assets/nutella.jpg",
       precio: "5500 U",
     },
-    // Puedes agregar más tipos aquí según sea necesario
   };
 
   // Obtener la información específica del tipo de marcador
@@ -53,14 +52,14 @@ function showInfoPopup(markerType) {
   // Crear un elemento de ventana emergente
   const popup = document.createElement("div");
   popup.id = "infoPopup";
+  popup.classList.add("container", "rounded", "shadow", "p-4", "mt-5");
   popup.style.position = "fixed";
   popup.style.bottom = "0";
   popup.style.left = "50%";
   popup.style.transform = "translateX(-50%)";
   popup.style.width = "100%";
   popup.style.backgroundColor = "white";
-  popup.style.padding = "20px";
-  popup.style.border = "2px solid black";
+  popup.style.borderRadius = "20px";
 
   // Agregar contenido a la ventana emergente utilizando la información específica del tipo
   popup.innerHTML = `
@@ -68,17 +67,60 @@ function showInfoPopup(markerType) {
     <p style="margin-left: 10px;">${info.description}</p>
     <p style="margin-left: 10px;"><b>${info.precio}</b></p>
     <img src="${info.imageUrl}" style="width: 100%; max-width: 300px; height: 200px;" />
-    <button style="margin-left: 10px;" onclick="showAlert()">Recetas</button>
-    <button style="margin-left: 10px;" onclick="closeInfoPopup()">Cerrar</button>
-  `;
+    <button class="btn btn-primary btn-lg" onclick="showRecipes(${markerType})">Recetas</button>
+    <button class="btn btn-secondary btn-lg" onclick="closeInfoPopup()">Cerrar</button>
+   `;
 
   // Agregar la ventana emergente al cuerpo del documento
   document.body.appendChild(popup);
   document.body.classList.add("popup-open");
 }
 
-function showAlert(){
-  alert("Hola, estas son las recetas")
+function showRecipes(markerType) {
+  // Cerrar la ventana de información antes de mostrar las recetas
+  closeInfoPopup();
+
+  // Define las recetas específicas para cada tipo de marcador
+  const recipesData = {
+    0: ["Ensalada de pera y espinacas", "Batido de pera y jengibre"],
+    1: ["Ensalada de manzana y nueces", "Batido de manzana y canela"],
+    2: ["Ensalada de brócoli y aguacate", "Sopa de brócoli cremosa"],
+    3: ["Tostadas con crema de avellanas", "Crepes de nutella con plátano"],
+  };
+
+  // Obtener las recetas específicas del tipo de marcador
+  const recipes = recipesData[markerType];
+
+  // Crear un elemento de ventana emergente para las recetas
+  const recipesPopup = document.createElement("div");
+  recipesPopup.id = "recipesPopup";
+  recipesPopup.style.position = "fixed";
+  recipesPopup.style.top = "50%";
+  recipesPopup.style.left = "50%";
+  recipesPopup.style.transform = "translate(-50%, -50%)";
+  recipesPopup.style.width = "70%";
+  recipesPopup.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+  recipesPopup.style.padding = "20px";
+  recipesPopup.style.borderRadius = "10px";
+  recipesPopup.classList.add("shadow"); // Aplica una sombra con Bootstrap
+
+  // Generar el contenido de las recetas
+  let recipesContent = `<h2 style="text-align: center; font-weight: bold;">Recetas</h2>`;
+  recipesContent += `<p style="text-align: justify;">`;
+  recipes.forEach((recipe) => {
+    recipesContent += `${recipe}<br>`;
+  });
+  recipesContent += `</p>`;
+  recipesContent += `<button class="btn btn-secondary btn-lg d-block mx-auto mt-3" onclick="closeRecipesPopup()">Cerrar</button>`;
+
+  // Agregar el contenido al popup de recetas
+  recipesPopup.innerHTML = recipesContent;
+
+  // Agregar la ventana emergente de recetas al cuerpo del documento
+  document.body.appendChild(recipesPopup);
+
+  // Agregar una clase al cuerpo para indicar que está abierta la ventana emergente
+  document.body.classList.add("popup-open");
 }
 
 function closeInfoPopup() {
@@ -86,6 +128,16 @@ function closeInfoPopup() {
   const popup = document.getElementById("infoPopup");
   if (popup) {
     popup.remove();
+  }
+
+  document.body.classList.remove("popup-open");
+}
+
+function closeRecipesPopup() {
+  // Eliminar la ventana emergente de recetas al hacer clic en el botón "Cerrar"
+  const recipesPopup = document.getElementById("recipesPopup");
+  if (recipesPopup) {
+    recipesPopup.remove();
   }
 
   document.body.classList.remove("popup-open");
