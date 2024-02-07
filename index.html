@@ -32,9 +32,19 @@
         <video id="video3" autoplay loop="true" src="videos/broccoli.mp4"></video>
         <video id="video4" autoplay loop="true" src="videos/nutella.mp4"></video>
 
-        <!-- IMAGENES -->
+        <!-- IMAGENES TEXTURA -->
         <img src="model/grass.jpg" id="grass" />
-        <img src="assets/infroFrutas.png" id="infoFrutas" />
+        <img src="model/texturaVegetacion.jpg" id="vegetation" />
+        <img src="model/texturaMadera.jpg" id="wall" />
+
+        <!-- IMAGENES INFORMACION-->
+
+        <img src="img/infroFrutas.png" id="infoFrutas" />
+        <img src="img/infoManzanas.jpg" id="infoManzanas" />
+        <img src="img/infoBrocoli.jpg" id="infoBrocoli" />
+        <img src="img/infoNutella.jpg" id="infoNutella" />
+        
+
       </a-assets>
 
         <!-- MARCADOR 0 -->
@@ -45,7 +55,9 @@
 
         <a-video position="1.3 0 0" rotation="90 180 0" scale="2.5 2.5 2.5" src="#video1"></a-video>
         
-        <a-plane src="#grass" position="0 0 0" rotation="-90 0 0" width="30" height="30" repeat="20 20" shadow="receive: true"></a-plane>
+        <a-box src="#wall" position="0 1.5 5" width="20" depth="1" height="4"></a-box>
+
+      <a-plane src="#grass" width="30" height="30" repeat="10 10" rotation="-90 0 0"></a-plane>
 
         <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoFrutas"></a-image>
       </a-marker>
@@ -55,46 +67,53 @@
 
       <a-marker type="barcode" value="1" markerhandler>
         
-        <a-entity position="0 0 0" scale="0.1 0.1 0.1" rotation="-90 0 0" gltf-model="#manzana"></a-entity>
+        <a-entity position="-0.7 2.8 0" scale="0.12 0.12 0.12" rotation="-90 0 0" gltf-model="#manzana"></a-entity>
 
-        <a-video position="0.8 0 0" rotation="90 180 0" scale="1 1 1" src="#video2"></a-video>
+        <a-video position="1.3 0 0" rotation="90 180 0" scale="2.5 2.5 2.5" src="#video2"></a-video>
+
+        <a-plane src="#grass" position="0 0 0" rotation="-90 0 0" width="30" height="30" repeat="20 20" shadow="receive: true"></a-plane>
+
+        <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoManzanas"></a-image>
+
       </a-marker>
 
         <!-- MARCADOR 2 -->
 
 
       <a-marker type="barcode" value="2" markerhandler>
-        <a-entity
-          position="0 0 0"
-          scale="1 1 1"
-          rotation="-90 0 0"
-          gltf-model="#brocoli"
-        ></a-entity>
+        <a-entity position="-1.2 1.4 0" scale="0.4 0.4 0.4" rotation="-90 0 0" gltf-model="#brocoli"></a-entity>
 
-        <a-video
-          position="0.8 0 0"
-          rotation="90 180 0"
-          scale="1 1 1"
-          src="#video3"
-        ></a-video>
+        <a-video position="1.3 0 0" rotation="90 180 0" scale="2.5 2.5 2.5" src="#video3"></a-video>
+
+        <a-plane src="#grass" position="0 0 0" rotation="-90 0 0" width="30" height="30" repeat="20 20" shadow="receive: true"></a-plane>
+
+        <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoBrocoli"></a-image>
+
+
       </a-marker>
+      
 
         <!-- MARCADOR 3 -->
 
       <a-marker type="barcode" value="3" markerhandler>
         <a-entity
-          position="0 0 0"
-          scale="10 10 10"
+          position="-0.9 0 0"
+          scale="20 20 20"
           rotation="-90 0 0"
           gltf-model="#nutella"
         ></a-entity>
 
         <a-video
-          position="0.8 0 0"
+          position="1.3 0 0"
           rotation="90 180 0"
-          scale="1 1 1"
+          scale="2.5 2.5 2.5"
           src="#video4"
         ></a-video>
+
+        <a-plane src="#wood" position="0 0 0" rotation="-90 0 0" width="30" height="30" repeat="20 20" shadow="receive: true"></a-plane>
+
+        <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoNutella"></a-image>
+
       </a-marker>
 
       <a-entity camera></a-entity>
