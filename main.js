@@ -3,17 +3,47 @@ AFRAME.registerComponent("markerhandler", {
     this.el.addEventListener("markerFound", (event) => {
       // Muestra la ventana emergente con la información específica para cada tipo
       showInfoPopup(parseInt(event.target.getAttribute("value")));
+      
+      // Recupera el ID del marcador
+      const markerValue = parseInt(event.target.getAttribute("value"));
+      
+      // Reproduce el sonido ambiente correspondiente al marcador encontrado
+      const sound = document.getElementById(`ambiente${markerValue}`);
+      if (sound) {
+        sound.components.sound.playSound();
+      }
     });
 
     this.el.addEventListener("markerLost", () => {
       // Oculta la ventana emergente
       closeInfoPopup();
       closeRecipesPopup();
+
+      // Pausa todos los sonidos ambiente cuando se pierde el marcador
+      const allSounds = document.querySelectorAll("a-sound");
+      allSounds.forEach((sound) => {
+        sound.components.sound.stopSound();
+      });
     });
   },
 });
 
+
+
+
+
 function showInfoPopup(markerType) {
+
+  const buttonTexts = {
+    0: "Recetas",
+    1: "Recetas",
+    2: "Recetas",
+    3: "Recetas",
+    4: "Recetas",
+    5: "Recomendados",
+  };
+
+
   // Obtener la información específica para el tipo de marcador
   const infoData = {
     0: {
@@ -44,10 +74,27 @@ function showInfoPopup(markerType) {
       imageUrl: "assets/nutella.jpg",
       precio: "5500 U",
     },
+    4: {
+      title: "PEZ",
+      description:
+        "Pez fresco y delicioso. ¡Una explosión de sabor en cada bocado!",
+      imageUrl: "assets/pescado.jpg",
+      precio: "20000 x Kg",
+    },
+    5: {
+      title: "Lavadora",
+      description:
+        "Lavadora eficiente y confiable, diseñada para simplificar tu rutina de lavado diaria. Con características avanzadas y un rendimiento excepcional, esta lavadora asegura resultados impecables en cada carga.",
+      imageUrl: "assets/lavadora.jpg",
+      precio: "1'500000 U",
+    },
   };
 
   // Obtener la información específica del tipo de marcador
   const info = infoData[markerType];
+
+  // Obtener el texto para el botón "Recetas" según el tipo de marcador
+  const buttonText = buttonTexts[markerType];
 
   // Crear un elemento de ventana emergente
   const popup = document.createElement("div");
@@ -67,7 +114,7 @@ function showInfoPopup(markerType) {
     <p style="margin-left: 10px;">${info.description}</p>
     <p style="margin-left: 10px;"><b>${info.precio}</b></p>
     <img src="${info.imageUrl}" style="width: 100%; max-width: 300px; height: 200px;" />
-    <button class="btn btn-primary btn-lg" onclick="showRecipes(${markerType})">Recetas</button>
+    <button class="btn btn-primary btn-lg" onclick="showRecipes(${markerType})">${buttonText}</button>
     <button class="btn btn-secondary btn-lg" onclick="closeInfoPopup()">Cerrar</button>
    `;
 
@@ -77,6 +124,19 @@ function showInfoPopup(markerType) {
 }
 
 function showRecipes(markerType) {
+
+  const titleTexts = {
+    0: "Recetas",
+    1: "Recetas",
+    2: "Recetas",
+    3: "Recetas",
+    4: "Recetas",
+    5: "Recomendados",
+  };
+
+
+  const titleText = titleTexts[markerType];
+
   // Cerrar la ventana de información antes de mostrar las recetas
   closeInfoPopup();
 
@@ -86,6 +146,8 @@ function showRecipes(markerType) {
     1: ["Ensalada de manzana y nueces", "Batido de manzana y canela"],
     2: ["Ensalada de brócoli y aguacate", "Sopa de brócoli cremosa"],
     3: ["Tostadas con crema de avellanas", "Crepes de nutella con plátano"],
+    4: ["Salmón al horno con hierbas","Pescado a la parrilla con salsa de mango y aguacate"],
+    5: ["Clasificar la ropa","No sobrecargar","Utilizar el detergente adecuado"],
   };
 
   // Obtener las recetas específicas del tipo de marcador
@@ -105,7 +167,7 @@ function showRecipes(markerType) {
   recipesPopup.classList.add("shadow"); // Aplica una sombra con Bootstrap
 
   // Generar el contenido de las recetas
-  let recipesContent = `<h2 style="text-align: center; font-weight: bold;">Recetas</h2>`;
+  let recipesContent = `<h2 style="text-align: center; font-weight: bold;">${titleText}</h2>`;
   recipesContent += `<p style="text-align: justify;">`;
   recipes.forEach((recipe) => {
     recipesContent += `${recipe}<br>`;

@@ -8,6 +8,8 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.0.0/dist/aframe-extras.min.js"></script>
+
 
     <script src="main.js"></script>
   </head>
@@ -25,17 +27,24 @@
         <a-asset-item id="manzana" src="model/manzana.glb"></a-asset-item>
         <a-asset-item id="brocoli" src="model/brocoli.glb"></a-asset-item>
         <a-asset-item id="nutella" src="model/nutella.glb"></a-asset-item>
+        <a-asset-item id="pescado" src="model/pescado.glb"></a-asset-item>
+        <a-asset-item id="lavadora" src="model/lavadora.glb"></a-asset-item>
 
         <!-- Define imágenes en el sistema de assets -->
         <video id="video1" autoplay loop="true" src="videos/pears.mp4"></video>
         <video id="video2" autoplay loop="true" src="videos/apple.mp4"></video>
         <video id="video3" autoplay loop="true" src="videos/broccoli.mp4"></video>
         <video id="video4" autoplay loop="true" src="videos/nutella.mp4"></video>
+        <video id="video5" autoplay loop="true" src="videos/pesca.mp4"></video>
+        <video id="video6" autoplay loop="true" src="videos/lavadora.mp4"></video>
 
         <!-- IMAGENES TEXTURA -->
-        <img src="model/grass.jpg" id="grass" />
-        <img src="model/texturaVegetacion.jpg" id="vegetation" />
-        <img src="model/texturaMadera.jpg" id="wall" />
+        <img src="textures/grass.jpg" id="grass" />
+        <img src="textures/texturaVegetacion.jpg" id="vegetation" />
+        <img src="textures/texturaMadera.jpg" id="wall" />
+        <img src="textures/arboles.jpg" id="arbol" />
+        <img src="textures/texturaOcean.jpg" id="ocean" />
+        <img src="textures/texturaPiso.jpg" id="piso" />
 
         <!-- IMAGENES INFORMACION-->
 
@@ -43,6 +52,8 @@
         <img src="img/infoManzanas.jpg" id="infoManzanas" />
         <img src="img/infoBrocoli.jpg" id="infoBrocoli" />
         <img src="img/infoNutella.jpg" id="infoNutella" />
+        <img src="img/infoPez.jpg" id="infoPez" />
+        <img src="img/infoLavadora.jpg" id="infoLavadora" />
         
 
       </a-assets>
@@ -55,11 +66,16 @@
 
         <a-video position="1.3 0 0" rotation="90 180 0" scale="2.5 2.5 2.5" src="#video1"></a-video>
         
-        <a-box src="#wall" position="0 1.5 5" width="20" depth="1" height="4"></a-box>
+        <a-box src="#wall" position="0 1.5 5" width="20" depth="1" height="10"></a-box>
 
       <a-plane src="#grass" width="30" height="30" repeat="10 10" rotation="-90 0 0"></a-plane>
 
         <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoFrutas"></a-image>
+        <a-entity particle-system="preset: dust; color: #00FFFF; particleCount: 5000"></a-entity>
+
+        <!-- Sonido ambiente -->
+        <a-sound id="ambiente0" src="sounds/naturaleza.mp3" loop="true"></a-sound>
+
       </a-marker>
 
         <!-- MARCADOR 1 -->
@@ -75,6 +91,8 @@
 
         <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoManzanas"></a-image>
 
+        <!-- Sonido ambiente -->
+        <a-sound id="ambiente0" src="sounds/naturaleza.mp3" loop="true"></a-sound>
       </a-marker>
 
         <!-- MARCADOR 2 -->
@@ -89,6 +107,8 @@
 
         <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoBrocoli"></a-image>
 
+        <!-- Sonido ambiente -->
+        <a-sound id="ambiente2" src="sounds/pajaro.mp3" loop="true"></a-sound>
 
       </a-marker>
       
@@ -110,11 +130,73 @@
           src="#video4"
         ></a-video>
 
-        <a-plane src="#wood" position="0 0 0" rotation="-90 0 0" width="30" height="30" repeat="20 20" shadow="receive: true"></a-plane>
+        <a-plane src="#wall" position="0 0 0" rotation="-90 0 0" width="30" height="30" repeat="20 20" shadow="receive: true"></a-plane>
 
         <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoNutella"></a-image>
 
+        
+        <!-- Sonido ambiente -->
+        <a-sound id="ambiente3" src="sounds/tambores.mp3" loop="true"></a-sound>
+
       </a-marker>
+
+        <!-- MARCADOR 4 -->
+
+
+      <a-marker type="barcode" value="4" markerhandler>
+        <a-entity
+          position="-1 0 0"
+          scale="0.5 0.5 0.5"
+          rotation="-90 0 0"
+          gltf-model="#pescado"
+        ></a-entity>
+
+        <a-video
+          position="1.3 0 0"
+          rotation="90 180 0"
+          scale="2.5 2.5 2.5"
+          src="#video5"
+        ></a-video>
+
+        <a-plane src="#ocean" position="0 0 0" rotation="-90 0 0" width="30" height="30" repeat="20 20" shadow="receive: true"></a-plane>
+
+        <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoPez"></a-image>
+
+        
+        <!-- Sonido ambiente -->
+        <a-sound id="ambiente4" src="sounds/oceano.mp3" loop="true"></a-sound>
+
+      </a-marker>
+
+
+
+        <!-- MARCADOR 5 -->
+
+
+        <a-marker type="barcode" value="5" markerhandler>
+          <a-entity
+            position="-1 0 1"
+            scale="2 2 2"
+            rotation="-90 0 0"
+            gltf-model="#lavadora"
+          ></a-entity>
+  
+          <a-video
+            position="1.2 0 0"
+            rotation="90 180 0"
+            scale="2.5 2.5 2.5"
+            src="#video6"
+          ></a-video>
+  
+          <a-plane src="#piso" position="0 0 0" rotation="-90 0 0" width="30" height="30" repeat="20 20" shadow="receive: true"></a-plane>
+  
+          <a-image position="0 0 4" rotation="-90 0 0" scale="3 4 4" src="#infoLavadora"></a-image>
+  
+          
+          <!-- Sonido ambiente -->
+          <a-sound id="ambiente5" src="sounds/lavadora.mp3" loop="true"></a-sound>
+          
+        </a-marker>
 
       <a-entity camera></a-entity>
     </a-scene>
