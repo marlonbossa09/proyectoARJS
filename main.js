@@ -137,6 +137,32 @@ function showRecipes(markerType) {
 
   const titleText = titleTexts[markerType];
 
+  const markerData = {
+    idMarker: markerType,
+    nombre: info.title,
+    precio: info.precio,
+    descripcion: info.description,
+    tipo: "Recetas", 
+  };
+
+
+  fetch('http://localhost:8080/productos/agregar', {
+    method: 'POST',
+    headers: {
+      'Accept': '*/*',
+      'Content-Type': 'application/json; charset=UTF-8'
+    },
+    body: JSON.stringify(markerData),
+  })
+  .then(response => response.json())
+  .then(data => {
+    showResponse(data);
+    alert(response);
+  })
+  .catch(error => {
+    alert(error);
+  });
+  
   // Cerrar la ventana de información antes de mostrar las recetas
   closeInfoPopup();
 
