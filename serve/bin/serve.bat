@@ -35,7 +35,7 @@ EXIT /B %ERRORLEVEL%
   echo 8
   echo 8  %SCRIPT_NAME% [options]
   echo 8  -d DIR    path to serve [required]
-  echo 8  -p PORT   default PORT=8080
+  echo 8  -p PORT   default PORT=8081
   echo 8  -h        hot reload on localhost
   echo 8  -r        enable hot reload
   echo 8  -i IFACE  choose network interface

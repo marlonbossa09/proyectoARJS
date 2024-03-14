@@ -59,6 +59,8 @@ const serverConfig = {
   },
 }
 
+
+
 const config = {
   mode: process.env.NODE_ENV,
   entry: { app: [path.resolve(__dirname, 'empty.js')] },
