@@ -1,10 +1,16 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import {
+          getFirestore,
+          collection,
+          addDoc,
+        } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+
 AFRAME.registerComponent("markerhandler", {
   init: function () {
     this.el.addEventListener("markerFound", (event) => {
-      // Muestra la ventana emergente con la información específica para cada tipo
       showInfoPopup(parseInt(event.target.getAttribute("value")));
       
-      // Recupera el ID del marcador
       const markerValue = parseInt(event.target.getAttribute("value"));
       
       const sound = document.getElementById(`ambiente${markerValue}`);
@@ -24,6 +30,19 @@ AFRAME.registerComponent("markerhandler", {
     });
   },
 });
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAoI5oQyAWizz9QMrEKxfgrp7PpsxWUULA",
+  authDomain: "softcomputo-agro.firebaseapp.com",
+  projectId: "softcomputo-agro",
+  storageBucket: "softcomputo-agro.appspot.com",
+  messagingSenderId: "812027506529",
+  appId: "1:812027506529:web:7bc43a3bf1617ec7275f20",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 
 
@@ -89,14 +108,12 @@ async function showInfoPopup(markerType) {
   };
   
   try {
-    const response = await axios.post("http://localhost:8080/productos/agregar", markerData, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-    alert('Datos enviados correctamente: ' + JSON.stringify(response.data));
+    await addDoc(collection(db, "productos"), data);
+    console.log("Datos enviados a Firestore correctamente");
+    alert("Pedido enviado correctamente");
   } catch (error) {
-    alert('Error al enviar los datos: ' + error.message);
+    console.error("Error al enviar datos a Firestore:", error);
+    alert("Ocurrió un error al enviar los datos a Firestore.");
   }
   
   const buttonText = buttonTexts[markerType];
